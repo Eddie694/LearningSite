@@ -1,0 +1,31 @@
+{% extends 'acetelapp/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="browse section">
+    <h2>Browse Courses</h2>
+    <div class="browse-courses">
+        {% for course in courses %}
+        <a href="{% url 'acetelapp:registercourse' course_id=course.id %}" class="card-box">
+            <div class="card">
+                <img src="{{course.image.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-heading">{{course.title}}</h5>
+                    <p class="card-text">{{course.description}}</p>
+                    <p style="font-size: 0.9rem;">
+                        <i class="far fa-clock" style="color:#055b38"></i> &nbsp;{{course.date}} <i
+                            class="fas fa-user-friends" style="color:#055b38"></i> 0 <span
+                            style="float: right; font-size: 1.3rem; color:#055b38;">&#8358;{{course.amount}}</span>
+                    </p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+{% endblock %}

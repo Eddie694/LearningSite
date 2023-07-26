@@ -1,0 +1,22 @@
+.settings-nav{
+        padding-left: 13rem;
+        padding-right: 19rem;
+        padding-top: 2rem;
+}
+.settings-nav ul li a{
+    text-decoration: none;
+    color: var(--gray-text);
+}
+.settings-nav ul {
+    background-color: rgb(166, 165, 160);
+}
+.form-section{
+    padding-bottom: 4rem;
+}
+.form-section form fieldset{
+    margin-top: 1rem;
+
+}
+.form-section form fieldset legend {
+    font-size: 1rem;
+}

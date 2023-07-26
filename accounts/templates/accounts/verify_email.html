@@ -1,0 +1,37 @@
+{% extends 'acetelapp/login_base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="section settings-nav" >
+            <ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="{% url 'accounts:bios' %}">BIOS</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:password_change' %}">CHANGE PASSWORD</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:change_email' %}">CHANGE GMAIL</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link " href="{% url 'accounts:verify_email' %}" >EMAIL VERIFICATION</a>
+                </li>
+              </ul>
+    </div>
+    <div class="form-section settings-nav">
+        <form action="">
+            <div style="text-align: center;">
+                <h2>Email Verification</h2>
+            </div>
+
+            <div class="mb-3">
+                <fieldset>
+                    <div class="col-auto" style="text-align:center ;">
+                        <button type="submit" class="btn btn-primary">Resent Email Verification Link</button>
+                    </div>
+                </fieldset>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

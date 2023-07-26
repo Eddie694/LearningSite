@@ -1,0 +1,37 @@
+{% extends 'acetelapp/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="browse section explore">
+    <heading>
+        <h2>Explore Top Test/Exams</h2>
+    </heading>
+
+    <div class="browse-courses test-exam">
+        {% for exam in exams %}
+        <a href="{% url 'acetelapp:registerexam' exam_id=exam.id %}" class="card-box">
+            <div class="card title-card">
+                <img src="{{exam.image.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-heading">{{exam.title}}</h5>
+                    <p class="card-text">{{exam.description}}</p>
+                </div>
+                <div class="title">
+                    <p style="font-size: 0.9rem;">
+                        <i class="far fa-comment-alt"></i> &nbsp;{{exam.question}} Questions <span style="float:right"><i
+                                class="fas fa-user-friends"></i>&nbsp;227 Subscribers</span>
+                    </p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+
+    </div>
+</div>
+
+
+</div>
+
+{% endblock %}

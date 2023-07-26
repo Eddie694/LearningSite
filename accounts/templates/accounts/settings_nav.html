@@ -1,0 +1,20 @@
+{% load static %}
+<div class="section settings-nav" >
+    <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'accounts:bios' %}">BIOS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:change_password' %}">CHANGE PASSWORD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:change_email' %}">CHANGE GMAIL</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'accounts:verify_email' %}" >EMAIL VERIFICATION</a>
+        </li>
+      </ul>
+</div>
+{% block content %}
+    
+{% endblock %}

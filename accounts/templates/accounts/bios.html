@@ -1,0 +1,57 @@
+{% extends 'acetelapp/login_base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="section settings-nav" >
+            <ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="{% url 'accounts:bios' %}">BIOS</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:password_change' %}">CHANGE PASSWORD</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:change_email' %}">CHANGE GMAIL</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link " href="{% url 'accounts:verify_email' %}" >EMAIL VERIFICATION</a>
+                </li>
+              </ul>
+    </div>
+    
+    <div class="form-section settings-nav">
+        <form  method="post" enctype="multipart/form-data">
+            {% for message in messages %}
+              <div class="alert alert-success" role="alert">
+                {{message}}
+              </div>
+              {% endfor %}
+          {% csrf_token %}
+            <div style="text-align: center;"><h2>Bio Settings</h2></div>
+
+            <div class="mb-3">
+                <fieldset>
+                    <legend>First name*</legend>
+                    {{user_form.first_name}}
+                </fieldset>
+                <fieldset>
+                    <legend>Surname*</legend>
+                   {{user_form.last_name}}
+                </fieldset>
+                <fieldset>
+                    {{profile_form.gender}}
+                </fieldset>
+                <fieldset>
+                    {{profile_form.profile_pic}}
+                </fieldset>
+                <fieldset>
+                <div class="col-auto" style="text-align:center;">
+                    <button type="submit" class="btn btn-primary">Update Bio</button>
+                </div>
+                </fieldset>
+              </div>
+        </form>
+    </div>
+    
+
+{% endblock %}
