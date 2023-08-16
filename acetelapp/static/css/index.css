@@ -33,17 +33,22 @@
     padding-right:3.8rem;
     
   }
-  .header{
+  #header{
     display: flex;
     align-items: center;
     text-align: center;
     width: 100%;
     overflow: hidden;
     position: sticky;
-    top: 0;
+    /* top: 0; */
     background-color:white;
     z-index: 1000;
+    transition: top 0.3s;
   }
+
+#header.show{
+  top:0;
+}
   .header .nav-bar{
     padding-top: 0.7rem;
   }

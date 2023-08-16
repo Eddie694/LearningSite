@@ -9,6 +9,7 @@ urlpatterns = [
     path('exam_payment_init/<int:exam_id>/', views.exam_payment_init, name = 'exam_payment_init'),
     path('exam_processpayment/<int:exam_id>/', views.exam_processpayment, name = 'exam_processpayment'),
     path('canceled/', views.payment_canceled, name='canceled'),
+    path('success/<int:course_id>/', views.success, name='success'),
 ]
 
 

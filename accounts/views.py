@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from accounts.forms import UpdateProfileForm, UpdateUserForm
 from .forms import CustomPasswordChangeForm, ChangeEmailForm, CustomUserCreationForm
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from accounts.forms import CustomPasswordResetForm, CustomPasswordResetConfirmForm
 from acetelapp.views import courses, exams
 from . models import Profile, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+
 
 
 
@@ -142,3 +146,26 @@ def change_email(request):
     }
 
     return render(request, 'accounts/change_email.html', context)
+
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'accounts/password_reset_form.html'
+    email_template_name = 'accounts/password_reset_email.html'
+    form_class = CustomPasswordResetForm
+    success_url = reverse_lazy('accounts:password_reset_done')
+    
+    
+
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'accounts/password_reset_done.html'
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'accounts/password_reset_confirm.html'
+    success_url = reverse_lazy('accounts:password_reset_complete')
+    form_class = CustomPasswordResetConfirmForm
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'accounts/password_reset_complete.html'
+
+

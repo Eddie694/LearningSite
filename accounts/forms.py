@@ -6,6 +6,11 @@ from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm, UserCr
 from django.contrib.auth import password_validation
 from django.utils.translation import gettext, gettext_lazy as _
 from django.core.validators import RegexValidator
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+
+
+ 
+
 
 #customUserCreationForm
 class CustomUserCreationForm(UserCreationForm):
@@ -71,3 +76,23 @@ class ChangeEmailForm(UserChangeForm):
     class Meta:
         model = User
         fields = ('email',)
+
+
+#Password ResetForm
+class CustomPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(max_length=200, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email address is not registered.")
+        return email
+    
+    
+
+
+class CustomPasswordResetConfirmForm(SetPasswordForm):
+    new_password1 = forms.CharField(max_length=30, required=True, help_text='Required.',
+                                            widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password2 = forms.CharField(max_length=30, required=True, help_text='Required.',
+                                            widget=forms.PasswordInput(attrs={'class': 'form-control'}))

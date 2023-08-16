@@ -20,7 +20,7 @@
       <img src="{% static 'images/createAccount.jpg' %}" alt="" class="box_image">
     </div>
     <div class="login_box">
-      <img src="{% static 'images/home_icon.JPG' %}" alt="" class="home_icon">
+      <a href="{% url 'acetelapp:index' %}"><img src="{% static 'images/home_icon.JPG' %}" alt="" class="home_icon"></a>
       <h2>Register with us</h2>
       <form class="row g-3" method="post">
         {% csrf_token %}

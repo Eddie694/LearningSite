@@ -15,10 +15,10 @@
 <body>
     <div class="section login_section">
         <div class="login_box">
-            <img src="{% static 'images/createAccount.jpg' %}" alt="" class="box_image">
+           <img src="{% static 'images/createAccount.jpg' %}" alt="" class="box_image"> 
         </div>
         <div class="login_box">
-            <img src="{% static 'images/home_icon.JPG' %}" alt="" class="home_icon">
+          <a href="{% url 'acetelapp:index' %}"><img src="{% static 'images/home_icon.JPG' %}" alt="" class="home_icon"></a>
             <h2>Welcome Back</h2>
             {% for message in messages %}
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -37,7 +37,7 @@
                     <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                   </div>
                   <div class="mb-3">
-                    <Span><a href="">Forget password?</a></Span>
+                    <Span><a href="{% url 'accounts:password_reset' %}">Forget password?</a></Span>
                   </div>
                   <div class="mb-3">
                     <input type="submit" class="form-control" id="submit" value="Login" style="background-color:#97b9f0; color:white">

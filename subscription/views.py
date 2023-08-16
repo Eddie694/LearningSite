@@ -4,21 +4,12 @@ import json
 import requests
 from django.conf import settings
 from .models import RegisteredCourse
+from django.contrib import messages
 
 
 def payment_init(request, course_id):
     
     course = get_object_or_404(Course, pk=course_id)
-
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        amount = request.POST.get('amount')
-
-        registered_course = RegisteredCourse.objects.create(email=email, amount=amount, course=course, user=request.user)
-        registered_course.save()
-
-        return render(request, 'subscription/success.html', {'course': course})
-    
 
     return render(request,'subscription/payment.html', {'course': course})
 
@@ -49,9 +40,19 @@ def processpayment(request, course_id):
     if request.method == 'POST':
         email = request.POST.get('email')
         amount = request.POST.get('amount')
-        
-        
-        success_url = request.build_absolute_uri(reverse('subscription:payment_init',  kwargs={'course_id':course_id}))
+
+        # check if the registered course already exist
+        registered_courses = RegisteredCourse.objects.filter(user=request.user)
+        if registered_courses.filter(course__title=course.title).exists():
+            messages.success(request, "You have already subscribed to this course.")
+            # Redirect to an error page or display a message indicating the payment cannot proceed
+            return redirect('acetelapp:mycourse')
+
+        # Create and save the RegisteredCourse object
+        registered_course = RegisteredCourse.objects.create(email=email, amount=amount, course=course, user=request.user)
+       
+              
+        success_url = request.build_absolute_uri(reverse('subscription:success',  kwargs={'course_id':course_id}))
         cancel_url = request.build_absolute_uri(reverse('subscription:canceled'))
     
         metadata = json.dumps({"course_id":course_id, "cancel_action": cancel_url})
@@ -75,6 +76,12 @@ def processpayment(request, course_id):
             return render(request, 'subscription/payment.html', {'course': course, 'error': response.get("message")})
 
     return render(request, 'subscrition/payment.html', {'course': course})
+
+def success(request, course_id):
+    course = get_object_or_404(Course, pk=course_id)
+    messages.success(request, f"You have successfully subscribed to {course.title}")
+
+    return redirect('acetelapp:mycourse')
 
 
 def exam_processpayment(request, exam_id):

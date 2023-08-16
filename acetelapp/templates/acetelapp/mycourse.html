@@ -5,18 +5,26 @@
 {% block content %}
 <div class="browse section">
     <h2>My Courses</h2>
-    
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+    {% endif %}
+
     <div class="browse-courses">
         {% for registered_course in registered_courses %}
         <a href="#" class="card-box">
             <div class="card">
-                <img src ="{{ registered_course.course.image.url }}" class="card-img-top" alt="...">
+                <img src="{{ registered_course.course.image.url }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-heading">{{registered_course.course.title}}</h5>
                     <p class="card-text">{{registered_course.course.description}}</p>
                     <p style="font-size: 0.9rem;">
                         <i class="far fa-clock" style="color:#055b38"></i> &nbsp;{{registered_course.course.date}} <i
-                            class="fas fa-user-friends" style="color:#055b38"></i> 0 <span
+                            class="fas fa-user-friends" style="color:#055b38"></i> {{registered_course.num_users}} <span
                             style="float: right; font-size: 1.3rem; color:#055b38;">&#8358;{{registered_course.amount}}</span>
                     </p>
                 </div>
@@ -24,7 +32,7 @@
         </a>
         {% endfor %}
     </div>
-   
+
 </div>
 
 

@@ -25,6 +25,8 @@ urlpatterns = [
     path('accounts/',include('accounts.urls', namespace='accounts')),
     path('',include('acetelapp.urls', namespace='acetelapp')),
     path('subscription/', include('subscription.urls', namespace='subscription')),
+
+    
 ]
 
 if settings.DEBUG:

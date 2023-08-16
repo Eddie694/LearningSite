@@ -13,10 +13,10 @@ from datetime import timedelta
 
 # Create your views here.
 def index(request):
-    courses = Course.objects.all()
     exams = Exam.objects.all()
-
-        
+    #Get couses according to number of subscribers
+    courses = Course.objects.annotate(num_users_registered=Count('registeredcourse'))
+ 
     for course in courses:
         duration = timezone.now() - course.date
         minutes = duration.total_seconds() / 60
@@ -45,7 +45,8 @@ def index(request):
    
     
 def courses(request):
-    courses = Course.objects.all()
+    #Get couses according to number of subscribers
+    courses = Course.objects.annotate(num_users_registered=Count('registeredcourse'))
     for course in courses:
         duration = timezone.now() - course.date
         minutes = duration.total_seconds() / 60
@@ -82,7 +83,8 @@ def exams(request):
 
 
 def login_page(request):
-    courses = Course.objects.all()
+    #Get couses according to number of subscribers
+    courses = Course.objects.annotate(num_users_registered=Count('registeredcourse'))
     exams = Exam.objects.all()
     if request.user.is_authenticated:
         user = request.user
@@ -118,9 +120,9 @@ def login_page(request):
     return render(request, 'acetelapp/login_page.html', context)
 
 def login_courses(request):
-    courses = Course.objects.all()
-    exams = Exam.objects.all()
-    
+    #Get couses according to number of subscribers
+    courses = Course.objects.annotate(num_users_registered=Count('registeredcourse'))
+       
     if request.user.is_authenticated:
         user = request.user
         login(request, user)
@@ -156,7 +158,6 @@ def login_courses(request):
     return render(request, 'acetelapp/login_courses.html', context)
 
 def login_exams(request):
-    courses = Course.objects.all()
     exams = Exam.objects.all()
     if request.user.is_authenticated:
         user = request.user
@@ -176,9 +177,12 @@ def login_exams(request):
     return render(request, 'acetelapp/login_exams.html', context)
 
 def mycourse(request):
-    registered_courses = RegisteredCourse.objects.all()
+    user = request.user
+    # Fetch the registered courses for the current user
+    registered_courses = RegisteredCourse.objects.filter(user=user)
+    #Get couses according to number of subscribers
+    registered_courses = registered_courses.annotate(num_users=Count('course__registeredcourse'))
     
-       
     if request.user.is_authenticated:
         user = request.user
         login(request, user)
@@ -205,6 +209,7 @@ def mycourse(request):
                 registered_course.course.date =f"{days} days ago"
 
     context = {
+        'courses':courses,
         'first_name': first_name,
         'user_first_letter': user_first_letter,
         'registered_courses': registered_courses,
